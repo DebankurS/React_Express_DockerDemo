@@ -1,8 +1,6 @@
-FROM node:lts-alpine3.16
+FROM node:lts-alpine as builder
 
-RUN apk add bash curl
-
-WORKDIR /api
+WORKDIR /app
 
 COPY package.json .
 
@@ -10,6 +8,10 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm","start"]
+FROM httpd:alpine
+
+COPY --from=builder /app/build /usr/local/apache2/htdocs
+
+EXPOSE 80
