@@ -1,0 +1,1 @@
+docker-compose -f dockercompose_prod.yml down
