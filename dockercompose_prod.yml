@@ -1,13 +1,23 @@
 version: "3"
 services:
   web:
+    image: "registry.gitlab.com/debankurs/testingdocker/backend:latest"
     build:
       context: ./api
     ports:
       - 9000:9000
   frontend:
+    image: "registry.gitlab.com/debankurs/testingdocker/frontend:latest"
     build:
       context: ./client
       dockerfile: dockerfile_prod
     ports:
       - 3000:80
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${HOME}/.docker/config.json:/config.json
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=5
+      - WATCHTOWER_CLEANUP='true'

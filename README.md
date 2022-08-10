@@ -25,3 +25,9 @@ Actually, there are two separated apps. The Client which serves the FrontEnd (us
 2. If you see a webpage saying `Welcome to React`, it means the FrontEnd is working.
 3. If the same webpage has the phrase `API is working properly`, it means the API is working.
 4. Enjoy!
+
+
+### Deploying using docker compose
+
+The dockercompose_prod.yml is configured to update the latest file.
+Just run docker-compose -f dockercompose_prod.yml pull to get the latest build

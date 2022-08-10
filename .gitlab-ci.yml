@@ -1,0 +1,25 @@
+build_frontend:
+  image: docker:20.10.16
+  stage: build
+  services:
+    - docker:20.10.16-dind
+  variables:
+    IMAGE_TAG: $REGISTRY_NAME/debankurs/$CI_PROJECT_NAME/frontend:latest
+  before_script:
+    - docker login -u $DOCKER_USER -p $PA_TOKEN $REGISTRY_NAME
+  script:
+    - docker build -t $IMAGE_TAG -f client/dockerfile_prod client
+    - docker push $IMAGE_TAG
+
+build_backend:
+  image: docker:20.10.16
+  stage: build
+  services:
+    - docker:20.10.16-dind
+  variables:
+    IMAGE_TAG: $REGISTRY_NAME/debankurs/$CI_PROJECT_NAME/backend:latest
+  before_script:
+    - docker login -u $DOCKER_USER -p $PA_TOKEN $REGISTRY_NAME
+  script:
+    - docker build -t $IMAGE_TAG -f api/Dockerfile api
+    - docker push $IMAGE_TAG
